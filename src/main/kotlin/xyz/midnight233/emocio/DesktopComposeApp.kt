@@ -17,6 +17,7 @@ import xyz.midnight233.emocio.components.*
 import xyz.midnight233.emocio.debugging.Placeholder
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
+import java.util.logging.Logger
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
@@ -24,6 +25,7 @@ import xyz.midnight233.emocio.stateful.StateType
 fun App() {
     EmocioState.run {
         stateType = remember { mutableStateOf(StateType.Action) }
+        journalSize = remember { mutableStateOf(0) }
         journal = remember { mutableStateListOf() }
         candidates = remember { mutableStateOf(listOf("1", "2", "3", "4", "5", "6")) }
         stringPredicate = remember { mutableStateOf({ true }) }
@@ -35,32 +37,9 @@ fun App() {
     }
     MaterialTheme {
         Box(Modifier.fillMaxSize()) {
-            ContentPanel {
-                val items = mutableStateListOf<ComposableLambda>()
-                val coroutine = rememberCoroutineScope()
-                val lazyState = rememberLazyListState()
-                LazyColumn(Modifier.fillMaxSize(), lazyState) {
-                    items(items) { it() }
-                }
-                Row {
-                    Button(onClick = {
-                        repeat(100) {
-                            items += { Text("Text Entry #$it") }
-                        }
-                        coroutine.launch{
-                            lazyState.animateScrollToItem(items.size - 1)
-                        }
-                    }) { Text("Add!") }
-                    Button(onClick = {
-                        coroutine.launch{
-                            lazyState.animateScrollToItem(items.size - 1)
-                        }
-                    }) { Text("Scroll!") }
-                }
-            }
+            EmocioJournalView()
             LeftPanel(true, "Notebook") {}
             RightPanel(true, "Operation") {}
-            EmocioBottomPopup()
             var state by EmocioState.stateType
             Button(onClick = {
                 val next = if (state.ordinal == StateType.values().lastIndex) 0 else state.ordinal + 1
@@ -72,9 +51,12 @@ fun App() {
 }
 
 fun main() {
+    println("\nLitterae.Next/Emocio Desktop, Development Version\n")
+    print("Initializing Emocio Runtime...")
     EmocioRuntime.run {
         artifact = Placeholder.emptyArtifact
     }
+    println("Done.")
     application {
         Window(onCloseRequest = ::exitApplication) {
             App()

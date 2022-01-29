@@ -1,4 +1,5 @@
 package xyz.midnight233.emocio.stateful
 
-class JournalEntryType {
+enum class JournalEntryType {
+    Notification, Narration, Speech, Prompt, Response
 }

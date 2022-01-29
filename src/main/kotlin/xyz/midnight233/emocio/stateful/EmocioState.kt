@@ -5,6 +5,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 
 object EmocioState {
     lateinit var stateType: MutableState<StateType>
+    lateinit var journalSize: MutableState<Int>
     lateinit var journal: SnapshotStateList<JournalEntry>
     lateinit var candidates: MutableState<List<String>>
     lateinit var stringPredicate: MutableState<(String) -> Boolean>

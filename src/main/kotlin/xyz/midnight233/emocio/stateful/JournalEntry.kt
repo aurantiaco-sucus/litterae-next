@@ -1,4 +1,6 @@
 package xyz.midnight233.emocio.stateful
 
-class JournalEntry {
-}
+class JournalEntry(
+    val type: JournalEntryType,
+    val content: String
+)

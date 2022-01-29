@@ -5,8 +5,10 @@ import xyz.midnight233.litterae.runtime.NoteData
 import java.io.File
 
 object EmocioBackend {
-    val engineDir = File(".\\.litterae")
-    val profileDir by lazy { File(".\\.litterae\\${EmocioRuntime.artifact.identifier}") }
+    val engineDir = File("~/.litterae")
+    val profileDir by lazy { File("~/.litterae/${EmocioRuntime.artifact.identifier}") }
+
+    const val fileExtension = "litterae_data"
 
     fun checkSanity(): Boolean {
         if (!profileDir.isDirectory) return false
@@ -28,11 +30,19 @@ object EmocioBackend {
         if (file.exists()) file.renameTo(old)
     }
 
+    fun deprecateFile(fileName: String) = deprecateFile(File(fileName))
+
     fun createInstance(name: String) = object : Instance() {
         override var instanceName: String = name
 
+        val instanceFolder = "$~/.litterae/${EmocioRuntime.artifact.identifier}/$instanceName"
+
+        fun deprecateAll() =
+                listOf("memo", "mark", "note")
+                        .forEach { deprecateFile("$instanceFolder/$it.$fileExtension") }
+
         override fun save() {
-            TODO("Not yet implemented")
+            deprecateAll()
         }
 
         override fun load() {
