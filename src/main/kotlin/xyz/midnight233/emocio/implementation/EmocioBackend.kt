@@ -3,12 +3,30 @@ package xyz.midnight233.emocio.implementation
 import xyz.midnight233.litterae.runtime.Instance
 import xyz.midnight233.litterae.runtime.NoteData
 import java.io.File
+import kotlin.system.exitProcess
 
 object EmocioBackend {
-    val engineDir = File("~/.litterae")
-    val profileDir by lazy { File("~/.litterae/${EmocioRuntime.artifact.identifier}") }
+    val engineDir = File(".litterae")
+    val profileDir by lazy { File(".litterae/${EmocioRuntime.artifact.identifier}") }
 
     const val fileExtension = "litterae_data"
+
+    fun composeBackendInit() {
+        if (!checkSanity()) {
+            print("Backend reported bad sanity! Fixing...")
+            if (fixSanity()) {
+                println("Done.")
+            } else {
+                println("Failed!\n")
+                println("FATAL ERROR: Emocio backend can't access the storage space!\n" +
+                    "* There could be a file with the same name of storage folder:\n" +
+                    "  .litterae/${EmocioRuntime.artifact.identifier}\n" +
+                    "* The storage folder could be unreachable for Emocio.\n" +
+                    "* Some JVM or OS related I/O problem occurred.")
+                exitProcess(-1)
+            }
+        }
+    }
 
     fun checkSanity(): Boolean {
         if (!profileDir.isDirectory) return false
@@ -32,10 +50,27 @@ object EmocioBackend {
 
     fun deprecateFile(fileName: String) = deprecateFile(File(fileName))
 
-    fun createInstance(name: String) = object : Instance() {
+    fun checkInstanceName(name: String): Boolean {
+        name.forEach {
+            when (it) {
+                ';', ':', '+', '\'', '"', ',', '.', '/', '\\',
+                '?', '~', '!', '@', '#', '$', '%', '^', '&', '*',
+                '(', ')', '=', '{', '}', '[', ']', '|', '<', '>' -> return false
+                else -> {}
+            }
+        }
+        return true
+    }
+
+    val instances: List<Instance> get() {
+        val list = profileDir.list()
+        return list?.filter { File(it).isDirectory }?.map { instanceNamed(it) } ?: emptyList()
+    }
+
+    fun instanceNamed(name: String) = object : Instance() {
         override var instanceName: String = name
 
-        val instanceFolder = "$~/.litterae/${EmocioRuntime.artifact.identifier}/$instanceName"
+        val instanceFolder = "$.litterae/${EmocioRuntime.artifact.identifier}/$instanceName"
 
         fun deprecateAll() =
                 listOf("memo", "mark", "note")
