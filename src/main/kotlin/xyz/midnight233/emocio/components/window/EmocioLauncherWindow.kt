@@ -16,8 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import xyz.midnight233.emocio.implementation.EmocioBackend
+import xyz.midnight233.emocio.implementation.EmocioFrontend
 import xyz.midnight233.emocio.implementation.EmocioRuntime
 import xyz.midnight233.emocio.stateful.EmocioState
+import xyz.midnight233.litterae.runtime.Frontend
 import xyz.midnight233.litterae.runtime.Instance
 import javax.swing.JOptionPane
 
@@ -74,7 +76,8 @@ import javax.swing.JOptionPane
                     shape = RoundedCornerShape(100),
                     onClick = {
                         val name = JOptionPane.showInputDialog("Name of instance?")?: ""
-                        if (name != "") instances += EmocioBackend.instanceNamed(name)
+                        if (name != "" && EmocioBackend.checkInstanceName(name))
+                            instances += EmocioBackend.instanceNamed(name)
                     }
                 ) {
                     Text("Create")
@@ -102,7 +105,9 @@ import javax.swing.JOptionPane
         }
         if (instances.isNotEmpty()) FloatingActionButton(
             onClick = {
-
+                Frontend.current = EmocioFrontend
+                Instance.current = instances[instanceIndex]
+                EmocioState.gameReady.value = true
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)

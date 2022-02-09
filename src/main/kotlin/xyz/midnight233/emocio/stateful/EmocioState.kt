@@ -1,22 +1,36 @@
 package xyz.midnight233.emocio.stateful
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import xyz.midnight233.litterae.content.Action
 import xyz.midnight233.litterae.content.Artifact
+import xyz.midnight233.litterae.content.Note
 
 object EmocioState {
-    lateinit var stateType: MutableState<StateType>
+    // Gameplay content states
     lateinit var journalSize: MutableState<Int>
-    lateinit var journal: SnapshotStateList<JournalEntry>
-    lateinit var candidates: MutableState<List<String>>
+    lateinit var notebook: MutableState<List<Note>>
+
+    // Gameplay content non-states
+    val journal = mutableListOf<JournalEntry>()
+
+    // Gameplay interaction states
+    lateinit var stateType: MutableState<StateType>
+    lateinit var choiceCandidates: MutableState<List<String>>
     lateinit var stringPredicate: MutableState<(String) -> Boolean>
     lateinit var choicesPredicate: MutableState<(List<Int>) -> Boolean>
     lateinit var intRange: MutableState<IntRange>
-    lateinit var choice: MutableState<Int>
-    lateinit var choices: MutableState<List<Int>>
-    lateinit var response: MutableState<String>
+    lateinit var actions: MutableState<List<Action>>
 
-    var emocioReady = false
+    // Gameplay interaction responses
+    lateinit var choice: MutableState<Int>
+    lateinit var multiChoice: MutableState<List<Int>>
+    lateinit var stringResponse: MutableState<String>
+    lateinit var actionChoice: MutableState<Action>
+
+    // Early initialization states
+    lateinit var gameReady: MutableState<Boolean>
+
+    // Early initialization non-states
     lateinit var emocioArgs: Array<String>
     lateinit var emocioArtifacts: List<Artifact>
 }

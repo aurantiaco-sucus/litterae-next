@@ -1,4 +1,4 @@
-package xyz.midnight233.emocio.components
+package xyz.midnight233.emocio.components.segment
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -18,9 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import xyz.midnight233.emocio.components.*
 import xyz.midnight233.emocio.stateful.EmocioState
-import xyz.midnight233.emocio.stateful.JournalEntry
-import xyz.midnight233.emocio.stateful.JournalEntryType
 import xyz.midnight233.emocio.stateful.StateType
 
 @Composable fun BoxScope.EmocioJournalView() {
@@ -44,14 +43,6 @@ import xyz.midnight233.emocio.stateful.StateType
         LaunchedEffect(journalSize) {
             lazyState.animateScrollToItem(journalSize - 1)
         }
-        Button(onClick = {
-            EmocioState.journal += JournalEntry(JournalEntryType.Notification, "Notification")
-            EmocioState.journal += JournalEntry(JournalEntryType.Narration, "Narration")
-            EmocioState.journal += JournalEntry(JournalEntryType.Speech, "Speaker::Speech")
-            EmocioState.journal += JournalEntry(JournalEntryType.Prompt, "Prompt")
-            EmocioState.journal += JournalEntry(JournalEntryType.Response, "Response")
-            EmocioState.journalSize.value = EmocioState.journal.size
-        }) { Text("Add narration!") }
     }
 }
 
@@ -68,7 +59,7 @@ import xyz.midnight233.emocio.stateful.StateType
 }
 
 @Composable fun EmocioTrailingCard() {
-    var response by EmocioState.response
+    var response by EmocioState.stringResponse
     var state by EmocioState.stateType
     when (state) {
         StateType.Choose -> {
@@ -76,8 +67,8 @@ import xyz.midnight233.emocio.stateful.StateType
                 state = StateType.Response
             }) {
                 EmocioTrailingCardTitle("Choose one")
-                SingleChooser(
-                    source = EmocioState.candidates.value,
+                SingleChooserList(
+                    source = EmocioState.choiceCandidates.value,
                     selectionState = EmocioState.choice,
                     modifier = Modifier.padding(start = 8.dp).fillMaxWidth()
                 )
@@ -86,13 +77,14 @@ import xyz.midnight233.emocio.stateful.StateType
         }
         StateType.MultiChoose -> {
             EmocioConfirmSkewerCard(onConfirm = {
-                state = StateType.Response
+                if (EmocioState.choicesPredicate.value(EmocioState.multiChoice.value)) {
+                    state = StateType.Response
+                }
             }) {
                 EmocioTrailingCardTitle("Choose some")
-                MultiChooser(
-                    source = EmocioState.candidates.value,
-                    selectionsState = EmocioState.choices,
-                    predicate = EmocioState.choicesPredicate.value,
+                MultiChooserList(
+                    source = EmocioState.choiceCandidates.value,
+                    selectionsState = EmocioState.multiChoice,
                     modifier = Modifier.padding(start = 8.dp).fillMaxSize()
                 )
                 Spacer(modifier = Modifier.height(16.dp))

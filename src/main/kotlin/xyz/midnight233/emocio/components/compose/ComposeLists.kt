@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterialApi::class)
-@Composable fun LazySingleChooser(
+@Composable fun LazySingleChooserList(
     source: List<String>,
     selectionState: MutableState<Int>,
     modifier: Modifier = Modifier
@@ -35,7 +35,7 @@ import androidx.compose.ui.Modifier
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@Composable fun SingleChooser(
+@Composable fun SingleChooserList(
     source: List<String>,
     selectionState: MutableState<Int>,
     modifier: Modifier = Modifier
@@ -60,7 +60,7 @@ import androidx.compose.ui.Modifier
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@Composable fun LazyMultiChooser(
+@Composable fun LazyMultiChooserList(
     source: List<String>,
     selectionsState: MutableState<List<Int>>,
     modifier: Modifier = Modifier
@@ -85,7 +85,7 @@ import androidx.compose.ui.Modifier
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@Composable fun LazyMultiChooser(
+@Composable fun LazyMultiChooserList(
     source: List<String>,
     selectionsState: MutableState<List<Int>>,
     predicate: (List<Int>) -> Boolean,
@@ -112,7 +112,33 @@ import androidx.compose.ui.Modifier
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@Composable fun MultiChooser(
+@Composable fun MultiChooserList(
+    source: List<String>,
+    selectionsState: MutableState<List<Int>>,
+    modifier: Modifier = Modifier
+) {
+    var selections by selectionsState
+    Column(modifier = modifier) {
+        source.indices.forEach {
+            ListItem(
+                trailing = {
+                    Checkbox(
+                        checked = selections.contains(it),
+                        onCheckedChange = { current ->
+                            val updated = if (current) selections + it else selections - it
+                            selections = updated
+                        }
+                    )
+                }
+            ) {
+                Text(source[it])
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable fun MultiChooserList(
     source: List<String>,
     selectionsState: MutableState<List<Int>>,
     predicate: (List<Int>) -> Boolean,

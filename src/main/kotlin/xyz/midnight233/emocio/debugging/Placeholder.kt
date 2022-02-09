@@ -8,6 +8,7 @@ object Placeholder {
         title = "Placeholder Artifact",
         author = "Nobody",
         version = "Zero",
-        segments = emptyList()
+        segments = emptyList(),
+        initializer = {}
     )
 }

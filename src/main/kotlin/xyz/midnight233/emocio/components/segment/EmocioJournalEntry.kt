@@ -1,4 +1,4 @@
-package xyz.midnight233.emocio.components
+package xyz.midnight233.emocio.components.segment
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

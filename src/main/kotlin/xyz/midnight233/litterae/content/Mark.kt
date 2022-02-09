@@ -1,13 +1,19 @@
 package xyz.midnight233.litterae.content
 
+import xyz.midnight233.litterae.runtime.Instance
 import kotlin.reflect.KProperty
 
-class Mark(val path: (prop: KProperty<*>) -> String) {
+class Mark(val path: (KProperty<*>) -> String) {
+    lateinit var address: String
+
     operator fun getValue(thisRef: Any?, property: KProperty<*>): Boolean {
-        TODO()
+        if (!this::address.isInitialized) address = path(property)
+        return Instance.current.marks.contains(address)
     }
 
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) {
-        TODO()
+        if (!this::address.isInitialized) address = path(property)
+        if (value && !Instance.current.marks.contains(address)) Instance.current.marks += address
+        else if (!value && Instance.current.marks.contains(address)) Instance.current.marks -= address
     }
 }

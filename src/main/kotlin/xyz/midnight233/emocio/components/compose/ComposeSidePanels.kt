@@ -2,6 +2,7 @@ package xyz.midnight233.emocio.components
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @Composable inline fun BoxScope.LeftPanel(
     available: Boolean,
-    title: String,
+    crossinline header: ComposableLambda,
     crossinline composable: ColumnLambda
 ) = _EmocioUiSidePanelImpl(
     available = available,
@@ -37,12 +38,12 @@ import kotlinx.coroutines.launch
     closeFabOffsetX = -10f,
     openFabOffsetY = -15f,
     panelShape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp),
-    panelTitle = title
+    panelHeader = header
 )
 
 @Composable inline fun BoxScope.RightPanel(
     available: Boolean,
-    title: String,
+    crossinline header: ComposableLambda,
     crossinline composable: ColumnLambda
 ) = _EmocioUiSidePanelImpl(
     available = available,
@@ -54,7 +55,7 @@ import kotlinx.coroutines.launch
     closeFabOffsetX = 10f,
     openFabOffsetY = 15f,
     panelShape = RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp),
-    panelTitle = title
+    panelHeader = header
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -68,7 +69,7 @@ import kotlinx.coroutines.launch
     closeFabOffsetX: Float,
     openFabOffsetY: Float,
     panelShape: Shape,
-    panelTitle: String,
+    crossinline panelHeader: ComposableLambda,
 ) {
     var panelVisibility by remember { mutableStateOf(false) }
     val coroutine = rememberCoroutineScope()
@@ -82,7 +83,8 @@ import kotlinx.coroutines.launch
             .align(panelAlignment)
     ) {
         Card(
-            elevation = 4.dp,
+            elevation = 0.dp,
+            border = BorderStroke(width = 1.dp, color = Color.LightGray),
             backgroundColor = Color.White,
             shape = panelShape,
             modifier = Modifier
@@ -97,12 +99,9 @@ import kotlinx.coroutines.launch
                         onClick = { panelVisibility = false },
                         modifier = Modifier.align(panelAlignment).offset(x = closeFabOffsetX.dp, y = (-10).dp)
                     ) { Icon(closeFabIcon, "Close panel") }
-                    Text(
-                        text = panelTitle,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        panelHeader()
+                    }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 composable()

@@ -1,6 +1,7 @@
 package xyz.midnight233.emocio.implementation
 
 import xyz.midnight233.litterae.runtime.Instance
+import xyz.midnight233.litterae.runtime.InstanceCodec
 import xyz.midnight233.litterae.runtime.NoteData
 import java.io.File
 import kotlin.system.exitProcess
@@ -78,10 +79,18 @@ object EmocioBackend {
 
         override fun save() {
             deprecateAll()
+            File("$instanceFolder/mark.$fileExtension").writeText(InstanceCodec.encodeMarks(marks))
+            File("$instanceFolder/memo.$fileExtension").writeText(InstanceCodec.encodeMemos(memos))
+            File("$instanceFolder/note.$fileExtension").writeText(InstanceCodec.encodeNotes(notes))
         }
 
         override fun load() {
-            TODO("Not yet implemented")
+            marks.clear()
+            marks.addAll(InstanceCodec.decodeMarks(File("$instanceFolder/mark.$fileExtension").readText()))
+            memos.clear()
+            memos.putAll(InstanceCodec.decodeMemos(File("$instanceFolder/memo.$fileExtension").readText()))
+            notes.clear()
+            notes.addAll(InstanceCodec.decodeNotes(File("$instanceFolder/note.$fileExtension").readText()))
         }
 
         override val marks: MutableList<String> = mutableListOf()
