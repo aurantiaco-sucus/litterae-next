@@ -10,8 +10,8 @@ abstract class Instance {
     abstract val memos: MutableMap<String, String>
     abstract val notes: MutableList<NoteData>
 
-    val currentSegmentIdentifier by Memo { "Global:CurrentSegment" }
-    val currentSceneIdentifier by Memo { "Global:CurrentScene" }
+    var currentSegmentIdentifier by Memo { "Global:CurrentSegment" }
+    var currentSceneIndex by Memo { "Global:CurrentScene" }
 
     companion object {
         lateinit var current: Instance

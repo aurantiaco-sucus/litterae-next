@@ -3,12 +3,9 @@ package xyz.midnight233.emocio.implementation
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
 import xyz.midnight233.litterae.compose.Composition
-import xyz.midnight233.litterae.content.Action
 import xyz.midnight233.litterae.content.Artifact
 import xyz.midnight233.litterae.content.Segment
-import xyz.midnight233.litterae.runtime.Frontend
 import xyz.midnight233.litterae.runtime.Instance
-import java.util.concurrent.atomic.AtomicBoolean
 
 object EmocioRuntime {
     lateinit var artifact: Artifact
@@ -16,9 +13,8 @@ object EmocioRuntime {
     var readyExit = false
 
     val currentSegment get() = artifact.segments
-        .find { it.identity == Instance.current.currentSegmentIdentifier }!!
-    val currentScene get() = currentSegment.scenes
-        .find { it.objectIdentifier == Instance.current.currentSceneIdentifier }!!
+        .find { it.identifier == Instance.current.currentSegmentIdentifier }!!
+    val currentScene get() = currentSegment.scenes[Instance.current.currentSceneIndex.toInt()]
 
     fun daemonThread() {
         // Profile initialization.

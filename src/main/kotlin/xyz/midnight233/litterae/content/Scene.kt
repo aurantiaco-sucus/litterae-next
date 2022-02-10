@@ -3,7 +3,7 @@ package xyz.midnight233.litterae.content
 import xyz.midnight233.litterae.common.LazilyIdentifiedAny
 import xyz.midnight233.litterae.compose.CompositionLambda
 
-class Scene(val segment: Segment, val name: String, val builder: Scene.() -> Unit) : LazilyIdentifiedAny() {
+class Scene(val segment: Segment, private val index: Int, val name: String, val builder: Scene.() -> Unit) {
     var immediateEvent: CompositionLambda? = null
     var actions = mutableListOf<Action>()
 
@@ -21,6 +21,6 @@ class Scene(val segment: Segment, val name: String, val builder: Scene.() -> Uni
         actions += Action(name, category, description, content)
     }
 
-    fun mark() = Mark { prop -> "Segment(${segment.identity}):Scene(${name}):Mark(${prop.name})" }
-    fun memo() = Memo { prop -> "Segment(${segment.identity}):Scene(${name}):Memo(${prop.name})" }
+    fun mark() = Mark { prop -> "Segment(${segment.identifier}):Scene(${index}):Mark(${prop.name})" }
+    fun memo() = Memo { prop -> "Segment(${segment.identifier}):Scene(${index}):Memo(${prop.name})" }
 }

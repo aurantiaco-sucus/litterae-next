@@ -1,12 +1,18 @@
 package xyz.midnight233.pm01e
 
 import xyz.midnight233.litterae.content.Artifact
+import xyz.midnight233.pm01e.ch0.Ch0Sg0
 
 val pm01artifact get() = Artifact(
-    identifier = "debug_placeholder",
-    title = "Placeholder Artifact",
-    author = "Nobody",
-    version = "Zero",
-    segments = emptyList(),
-    initializer = {}
+    identifier = "pm01_next",
+    title = "Dome 41",
+    author = "Midnight233",
+    version = "InDev",
+    segments = listOf(
+        Ch0Sg0
+    ),
+    initializer = {
+        currentSegmentIdentifier = Ch0Sg0::class.qualifiedName!!
+        currentSceneIndex = "0"
+    }
 )
