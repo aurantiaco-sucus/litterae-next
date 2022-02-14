@@ -5,7 +5,7 @@ import xyz.midnight233.litterae.runtime.Frontend
 object Composition {
     private val frontend get() = Frontend.current
 
-    operator fun String.unaryMinus() {
+    fun String.narrate() {
         frontend.showNarration(this)
         frontend.requestContinue()
     }
@@ -37,5 +37,10 @@ object Composition {
         fun String.bind(content: CompositionLambda) {
             choices += this to content
         }
+    }
+
+    fun String.ask(): String {
+        frontend.showPrompt(this)
+        return frontend.inputString { true }
     }
 }

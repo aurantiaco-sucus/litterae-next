@@ -1,6 +1,7 @@
 package xyz.midnight233.litterae.content
 
-import xyz.midnight233.litterae.common.LazilyIdentifiedAny
+import xyz.midnight233.emocio.stateful.EmocioState
+import xyz.midnight233.litterae.runtime.Instance
 import xyz.midnight233.litterae.runtime.NoteData
 
 class Note(
@@ -11,5 +12,17 @@ class Note(
     val content: String
 ) {
     val data by lazy { NoteData(title, category, content) }
-    var available by Mark { "Chapter(${segment.identifier}):Scene(${index}):Memo" }
+    private var availabilityMark by Mark { "Chapter(${segment.identifier}):Scene(${index}):Memo" }
+
+    var available get() = availabilityMark
+        set(value) {
+            if (value && !availabilityMark) {
+                Instance.current.notes += data
+                EmocioState.notebookSize.value++
+            } else if (!value && availabilityMark) {
+                Instance.current.notes -= data
+                EmocioState.notebookSize.value--
+            }
+            availabilityMark = value
+        }
 }

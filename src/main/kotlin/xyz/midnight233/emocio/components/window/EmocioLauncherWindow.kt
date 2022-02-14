@@ -28,7 +28,7 @@ import javax.swing.JOptionPane
     var artifactIndex by remember { mutableStateOf(0) }
     val artifact by derivedStateOf { EmocioState.emocioArtifacts[artifactIndex] }
     var artifactChooserOpened by remember { mutableStateOf(false) }
-    var instances by remember { mutableStateOf(emptyList<Instance>()) }
+    var instances by remember { mutableStateOf(EmocioBackend.instances) }
     var instanceIndex by remember { mutableStateOf(0) }
     Box(Modifier.fillMaxSize()) {
         Column(Modifier
@@ -108,6 +108,7 @@ import javax.swing.JOptionPane
                 Frontend.current = EmocioFrontend
                 Instance.current = instances[instanceIndex]
                 EmocioState.gameReady.value = true
+                Instance.instanceReady.set(true)
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)

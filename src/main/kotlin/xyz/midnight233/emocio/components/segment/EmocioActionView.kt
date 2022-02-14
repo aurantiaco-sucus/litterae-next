@@ -34,20 +34,24 @@ import javax.swing.Box
             EnumChooserButton(categoryState)
         }
     ) {
-        LazyColumn {
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
             items(current) {
                 Button(
                     onClick = {
+                        EmocioState.actionChoice.value = it
                         EmocioState.stateType.value = StateType.Response
-                    }
+                    },
+                    shape = RoundedCornerShape(12.dp)
                 ) {
-                    Row {
+                    Column {
                         Text(
                             text = it.name,
                             fontWeight = FontWeight.Bold
                         )
                         if (it.description != null) {
-                            Spacer(Modifier.height(8.dp))
+                            Spacer(Modifier.height(4.dp))
                             EmocioContentText(it.description)
                         }
                     }
@@ -55,7 +59,7 @@ import javax.swing.Box
             }
         }
     }
-    LaunchedEffect(EmocioState.actions.value) {
+    LaunchedEffect(EmocioState.actions.value, category) {
         val filtered = EmocioState.actions.value.filter { it.category == category }
         if (filtered != current) current = filtered
     }

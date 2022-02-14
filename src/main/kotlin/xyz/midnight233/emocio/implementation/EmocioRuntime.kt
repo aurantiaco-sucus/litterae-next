@@ -1,5 +1,6 @@
 package xyz.midnight233.emocio.implementation
 
+import xyz.midnight233.emocio.implementation.EmocioBackend.exists
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
 import xyz.midnight233.litterae.compose.Composition
@@ -9,7 +10,6 @@ import xyz.midnight233.litterae.runtime.Instance
 
 object EmocioRuntime {
     lateinit var artifact: Artifact
-    var newProfile = false
     var readyExit = false
 
     val currentSegment get() = artifact.segments
@@ -17,13 +17,13 @@ object EmocioRuntime {
     val currentScene get() = currentSegment.scenes[Instance.current.currentSceneIndex.toInt()]
 
     fun daemonThread() {
+        // Wait for instance to come up
+        while (!Instance.instanceReady.get()) Thread.onSpinWait()
         // Profile initialization.
-        if (newProfile) {
+        if (!Instance.current.exists()) {
             Instance.current.run(artifact.initializer)
             Instance.current.save()
-        } else {
-            Instance.current.load()
-        }
+        } else Instance.current.load()
         // Content initialization.
         artifact.segments.forEach(Segment::build)
         // Content loop.

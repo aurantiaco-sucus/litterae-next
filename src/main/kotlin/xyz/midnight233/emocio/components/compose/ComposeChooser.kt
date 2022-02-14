@@ -47,6 +47,7 @@ inline fun <reified T: Enum<T>> EnumChooserButton(
                 DropdownMenuItem(
                     onClick = {
                         value = it
+                        menuExpanded = false
                     }
                 ) {
                     Text(it.name)

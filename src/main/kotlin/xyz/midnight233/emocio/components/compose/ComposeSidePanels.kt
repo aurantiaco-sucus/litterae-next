@@ -1,6 +1,7 @@
 package xyz.midnight233.emocio.components
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -120,9 +121,12 @@ import kotlinx.coroutines.launch
                 onEnter = { coroutine.launch { fabMouseOver = true }; false },
                 onExit = { coroutine.launch { fabMouseOver = false }; false })
     ) {
-        FloatingActionButton(onClick = {
-            panelVisibility = !panelVisibility
-            fabMouseOver = false
-        }) { Icon(openFabIcon, "Open panel") }
+        FloatingActionButton(
+            onClick = {
+                panelVisibility = !panelVisibility
+                fabMouseOver = false
+            },
+            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp)
+        ) { Icon(openFabIcon, "Open panel") }
     }
 }

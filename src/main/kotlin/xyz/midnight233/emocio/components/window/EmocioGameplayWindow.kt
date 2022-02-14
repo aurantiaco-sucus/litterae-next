@@ -18,6 +18,7 @@ import xyz.midnight233.litterae.content.ActionCategory
     EmocioState.run {
         stateType = remember { mutableStateOf(StateType.Response) }
         journalSize = remember { mutableStateOf(0) }
+        notebookSize = remember { mutableStateOf(0) }
         choiceCandidates = remember { mutableStateOf(emptyList()) }
         stringPredicate = remember { mutableStateOf({ true }) }
         choicesPredicate = remember { mutableStateOf({ true }) }
@@ -25,7 +26,6 @@ import xyz.midnight233.litterae.content.ActionCategory
         choice = remember { mutableStateOf(0) }
         multiChoice = remember { mutableStateOf(emptyList()) }
         stringResponse = remember { mutableStateOf("") }
-        notebook = remember { mutableStateOf(emptyList()) }
         actions = remember { mutableStateOf(emptyList()) }
         actionChoice = remember { mutableStateOf(Action("", ActionCategory.Context, "") {}) }
     }
@@ -37,7 +37,7 @@ import xyz.midnight233.litterae.content.ActionCategory
             var state by EmocioState.stateType
         }
     }
-    LaunchedEffect(true) {
+    SideEffect {
         Thread(EmocioRuntime::daemonThread).start()
     }
 }

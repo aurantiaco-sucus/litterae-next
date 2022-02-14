@@ -8,7 +8,7 @@ import kotlin.system.exitProcess
 
 object EmocioBackend {
     val engineDir = File(".litterae")
-    val profileDir by lazy { File(".litterae/${EmocioRuntime.artifact.identifier}") }
+    val profileDir get() = File(".litterae/${EmocioRuntime.artifact.identifier}")
 
     const val fileExtension = "litterae_data"
 
@@ -65,19 +65,20 @@ object EmocioBackend {
 
     val instances: List<Instance> get() {
         val list = profileDir.list()
-        return list?.filter { File(it).isDirectory }?.map { instanceNamed(it) } ?: emptyList()
+        return list!!.filter { File("${profileDir.path}/$it").isDirectory }.map { instanceNamed(it) }
     }
 
     fun instanceNamed(name: String) = object : Instance() {
         override var instanceName: String = name
 
-        val instanceFolder = "$.litterae/${EmocioRuntime.artifact.identifier}/$instanceName"
+        val instanceFolder = ".litterae/${EmocioRuntime.artifact.identifier}/$instanceName"
 
         fun deprecateAll() =
                 listOf("memo", "mark", "note")
                         .forEach { deprecateFile("$instanceFolder/$it.$fileExtension") }
 
         override fun save() {
+            if (!File(instanceFolder).exists()) File(instanceFolder).mkdir()
             deprecateAll()
             File("$instanceFolder/mark.$fileExtension").writeText(InstanceCodec.encodeMarks(marks))
             File("$instanceFolder/memo.$fileExtension").writeText(InstanceCodec.encodeMemos(memos))
@@ -96,5 +97,9 @@ object EmocioBackend {
         override val marks: MutableList<String> = mutableListOf()
         override val memos: MutableMap<String, String> = mutableMapOf()
         override val notes: MutableList<NoteData> = mutableListOf()
+    }
+
+    fun Instance.exists(): Boolean {
+        return File(".litterae/${EmocioRuntime.artifact.identifier}/$instanceName").exists()
     }
 }

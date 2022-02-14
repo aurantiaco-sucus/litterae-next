@@ -16,6 +16,7 @@ object EmocioFrontend : Frontend() {
             type = JournalEntryType.Notification,
             content = content
         )
+        EmocioState.journalSize.value++
     }
 
     override fun showNarration(content: String) {
@@ -32,6 +33,7 @@ object EmocioFrontend : Frontend() {
             type = JournalEntryType.Speech,
             content = "$subject::$content"
         )
+        EmocioState.journalSize.value++
         EmocioState.stateType.value = StateType.Continue
     }
 
@@ -40,6 +42,8 @@ object EmocioFrontend : Frontend() {
             type = JournalEntryType.Prompt,
             content = content
         )
+        EmocioState.journalSize.value++
+        EmocioState.stateType.value = StateType.Continue
     }
 
     override fun inputString(validator: (String) -> Boolean): String {
@@ -66,6 +70,11 @@ object EmocioFrontend : Frontend() {
         EmocioState.choiceCandidates.value = choices
         EmocioState.stateType.value = StateType.Choose
         waitForResponse()
+        EmocioState.journal += JournalEntry(
+            type = JournalEntryType.Response,
+            content = choices[EmocioState.choice.value]
+        )
+        EmocioState.journalSize.value++
         return choices[EmocioState.choice.value]
     }
 
@@ -73,6 +82,11 @@ object EmocioFrontend : Frontend() {
         EmocioState.choiceCandidates.value = choices
         EmocioState.stateType.value = StateType.MultiChoose
         waitForResponse()
+        EmocioState.journal += JournalEntry(
+            type = JournalEntryType.Response,
+            content = EmocioState.multiChoice.value.joinToString(separator = ", ") { choices[it] }
+        )
+        EmocioState.journalSize.value++
         return EmocioState.multiChoice.value.map { choices[it] }
     }
 

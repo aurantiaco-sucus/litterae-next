@@ -8,6 +8,7 @@ object InstanceCodec {
 
     fun decodeMarks(source: String): List<String> = source
         .lines()
+        .filter { it.isNotEmpty() }
 
     fun encodeMemos(source: Map<String, String>): String = source
         .map { "${it.key}::${it.value}" }
@@ -15,6 +16,7 @@ object InstanceCodec {
 
     fun decodeMemos(source: String): Map<String, String> = source
         .lines()
+        .filter { it.isNotEmpty() }
         .map { it.split("::") }
         .associate { it[0] to it[1] }
 
@@ -24,6 +26,7 @@ object InstanceCodec {
 
     fun decodeNotes(source: String): List<NoteData> = source
         .lines()
+        .filter { it.isNotEmpty() }
         .map { it.split("::") }
         .map { NoteData(it[0], NoteCategory.valueOf(it[1]), it[2]) }
 }

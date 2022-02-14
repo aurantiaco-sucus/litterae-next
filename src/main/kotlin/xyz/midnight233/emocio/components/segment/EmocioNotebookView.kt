@@ -19,11 +19,13 @@ import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
 import xyz.midnight233.litterae.content.Note
 import xyz.midnight233.litterae.content.NoteCategory
+import xyz.midnight233.litterae.runtime.Instance
+import xyz.midnight233.litterae.runtime.NoteData
 
 @Composable fun BoxScope.EmocioNotebookView() {
     val categoryState = remember { mutableStateOf(NoteCategory.Storyline) }
     val category by categoryState
-    var current by remember { mutableStateOf(emptyList<Note>()) }
+    var current by remember { mutableStateOf(emptyList<NoteData>()) }
     LeftPanel(
         available = EmocioState.stateType.value == StateType.Action,
         header = {
@@ -36,13 +38,12 @@ import xyz.midnight233.litterae.content.NoteCategory
             }
         }
     }
-    LaunchedEffect(EmocioState.notebook.value) {
-        val filtered = EmocioState.notebook.value.filter { it.category == category }
-        if (filtered != current) current = filtered
+    LaunchedEffect(EmocioState.notebookSize.value, category) {
+        if (EmocioState.gameReady.value) current = Instance.current.notes.filter { it.category == category }
     }
 }
 
-@Composable fun EmocioNotebookCard(note: Note) {
+@Composable fun EmocioNotebookCard(note: NoteData) {
     Card(
         border = BorderStroke(width = 1.dp, color = Color.LightGray),
         elevation = 0.dp,

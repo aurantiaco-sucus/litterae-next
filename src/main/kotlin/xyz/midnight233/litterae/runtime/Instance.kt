@@ -1,6 +1,7 @@
 package xyz.midnight233.litterae.runtime
 
 import xyz.midnight233.litterae.content.Memo
+import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class Instance {
     abstract var instanceName: String
@@ -14,6 +15,7 @@ abstract class Instance {
     var currentSceneIndex by Memo { "Global:CurrentScene" }
 
     companion object {
+        val instanceReady = AtomicBoolean(false)
         lateinit var current: Instance
     }
 }

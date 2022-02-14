@@ -1,6 +1,5 @@
 package xyz.midnight233.litterae.content
 
-import xyz.midnight233.litterae.common.LazilyIdentifiedAny
 import xyz.midnight233.litterae.compose.CompositionLambda
 
 class Scene(val segment: Segment, private val index: Int, val name: String, val builder: Scene.() -> Unit) {
@@ -17,7 +16,12 @@ class Scene(val segment: Segment, private val index: Int, val name: String, val 
         immediateEvent = content
     }
 
-    fun action(name: String, category: ActionCategory, description: String? = null, content: CompositionLambda) {
+    fun action(
+        name: String,
+        category: ActionCategory = ActionCategory.Context,
+        description: String? = null,
+        content: CompositionLambda
+    ) {
         actions += Action(name, category, description, content)
     }
 
