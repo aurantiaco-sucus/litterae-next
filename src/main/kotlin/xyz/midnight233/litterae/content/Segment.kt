@@ -22,7 +22,7 @@ abstract class Segment(val builder: Segment.() -> Unit) {
     }
 
     fun note(title: String, category: NoteCategory = NoteCategory.Storyline, content: String) : Reference<Note> {
-        val note = Note(this, notes.lastIndex + 1, title, category, content)
+        val note = Note("Segment(${this.identifier}):Note(${notes.lastIndex + 1})", title, category, content)
         notes += note
         return notes.weakReferenceOf(notes.lastIndex)
     }

@@ -1,43 +1,20 @@
 package xyz.midnight233.pm01e.ch0
 
-import xyz.midnight233.litterae.compose.Composition.narrate
 import xyz.midnight233.litterae.content.Segment
 
 object Ch0Sg0 : Segment({
     val sceneIntro by scene("Introduction") {
-        var immediateFinished by mark()
-        val noteOne by note(
-            title = "Just a note",
-            content = "Good to go!"
-        )
-        if (!immediateFinished) {
-            "Test, test, test".narrate()
-            immediateFinished = true
-        }
-        action(
-            name = "Test",
-            description = "Test test"
-        ) {
-            "Hey!".narrate()
-            "One, two or three?".choose {
-                "One".bind {
-                    "One!".narrate()
+        immediate {
+            narrator.."Somewhere, you suddenly gained consciousness. *Absolutely nothing* is around you..."
+            "\"Where am I?\", you asked from the bottom of heart...".. {
+                "The bottom of the sea...".. {
+                    narrator.."From forbidden pages of the past... Don't you know? You are... awaken from the sea..."
                 }
-                "Two".bind {
-                    "Two!".narrate()
-                }
-                "Three".bind {
-                    "Three!".narrate()
-                    val more = "Any more?".ask()
-                    more.narrate()
+                "The heart of darkness".. {
+                    narrator.."From the very core of darkness... You are in no way a good one... The evil inside your " +
+                        "heart woke you up..."
                 }
             }
-        }
-        action(
-            name = "Toggle",
-            description = "Toggle!!!"
-        ) {
-            noteOne.available = !noteOne.available
         }
     }
 })

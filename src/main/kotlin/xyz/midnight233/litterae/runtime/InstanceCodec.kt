@@ -22,11 +22,11 @@ object InstanceCodec {
 
     fun encodeNotes(source: List<NoteData>): String = source
         .joinToString(separator = System.getProperty("line.separator"))
-        { "${it.title}::${it.category.name}::${it.content}" }
+        { "${it.identifier}::${it.title}::${it.category.name}::${it.content}" }
 
     fun decodeNotes(source: String): List<NoteData> = source
         .lines()
         .filter { it.isNotEmpty() }
         .map { it.split("::") }
-        .map { NoteData(it[0], NoteCategory.valueOf(it[1]), it[2]) }
+        .map { NoteData(it[0], it[1], NoteCategory.valueOf(it[2]), it[3]) }
 }

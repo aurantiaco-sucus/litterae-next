@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
 import xyz.midnight233.emocio.components.EmocioGameplayWindow
 import xyz.midnight233.emocio.components.EmocioLauncherWindow
+import xyz.midnight233.emocio.implementation.EmocioBackend
 import xyz.midnight233.emocio.implementation.EmocioDefault
 import xyz.midnight233.emocio.implementation.EmocioRuntime
 import xyz.midnight233.emocio.stateful.EmocioState
@@ -16,6 +17,7 @@ fun main(args: Array<String>) {
     EmocioState.emocioArgs = args
     EmocioState.emocioArtifacts = EmocioDefault.artifacts
     EmocioRuntime.artifact = EmocioState.emocioArtifacts[0]
+    EmocioBackend.composeBackendInit()
 
     application {
         EmocioState.gameReady = remember { mutableStateOf(false) }

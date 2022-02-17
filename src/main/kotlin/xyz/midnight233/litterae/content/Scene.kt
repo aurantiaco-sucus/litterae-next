@@ -1,14 +1,18 @@
 package xyz.midnight233.litterae.content
 
+import xyz.midnight233.litterae.common.Reference
+import xyz.midnight233.litterae.common.References.weakReferenceOf
 import xyz.midnight233.litterae.compose.CompositionLambda
 
 class Scene(val segment: Segment, private val index: Int, val name: String, val builder: Scene.() -> Unit) {
     var immediateEvent: CompositionLambda? = null
-    var actions = mutableListOf<Action>()
+    lateinit var actions: MutableList<Action>
+    lateinit var notes: MutableList<Note>
 
     fun rebuild() {
         immediateEvent = null
         actions = mutableListOf()
+        notes = mutableListOf()
         builder(this)
     }
 
@@ -23,6 +27,14 @@ class Scene(val segment: Segment, private val index: Int, val name: String, val 
         content: CompositionLambda
     ) {
         actions += Action(name, category, description, content)
+    }
+
+    fun note(title: String, category: NoteCategory = NoteCategory.Storyline, content: String) : Reference<Note> {
+        val note = Note(
+            "Segment(${segment.identifier}):Scene($index):Note(${notes.lastIndex + 1})"
+            , title, category, content)
+        notes += note
+        return notes.weakReferenceOf(notes.lastIndex)
     }
 
     fun mark() = Mark { prop -> "Segment(${segment.identifier}):Scene(${index}):Mark(${prop.name})" }

@@ -1,5 +1,6 @@
 package xyz.midnight233.emocio.implementation
 
+import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.litterae.runtime.Instance
 import xyz.midnight233.litterae.runtime.InstanceCodec
 import xyz.midnight233.litterae.runtime.NoteData
@@ -92,6 +93,7 @@ object EmocioBackend {
             memos.putAll(InstanceCodec.decodeMemos(File("$instanceFolder/memo.$fileExtension").readText()))
             notes.clear()
             notes.addAll(InstanceCodec.decodeNotes(File("$instanceFolder/note.$fileExtension").readText()))
+            EmocioState.notebookSize.value = notes.size
         }
 
         override val marks: MutableList<String> = mutableListOf()

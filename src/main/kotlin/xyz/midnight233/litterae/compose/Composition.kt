@@ -5,17 +5,15 @@ import xyz.midnight233.litterae.runtime.Frontend
 object Composition {
     private val frontend get() = Frontend.current
 
-    fun String.narrate() {
-        frontend.showNarration(this)
-        frontend.requestContinue()
-    }
+    const val narrator = "#narrator#"
 
     operator fun String.rangeTo(content: String) {
-        frontend.showSpeech(this, content)
+        if (this == narrator) frontend.showNarration(content)
+        else frontend.showSpeech(this, content)
         frontend.requestContinue()
     }
 
-    fun String.choose(builder: ChoiceBuilderScope.() -> Unit) {
+    operator fun String.rangeTo(builder: ChoiceBuilderScope.() -> Unit) {
         frontend.showPrompt(this)
         val choices = ChoiceBuilderScope().also(builder).choices
         val choice = frontend.inputChoice(choices.map { it.first })
@@ -34,7 +32,7 @@ object Composition {
 
     class ChoiceBuilderScope {
         val choices = mutableListOf<Pair<String, CompositionLambda>>()
-        fun String.bind(content: CompositionLambda) {
+        operator fun String.rangeTo(content: CompositionLambda) {
             choices += this to content
         }
     }
