@@ -1,6 +1,5 @@
 package xyz.midnight233.emocio.components.segment
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -8,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Done
@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import xyz.midnight233.emocio.components.*
+import xyz.midnight233.emocio.components.compose.ActionButton
+import xyz.midnight233.emocio.components.compose.TextInput
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
 
@@ -28,135 +30,115 @@ import xyz.midnight233.emocio.stateful.StateType
     ContentPanel {
         LazyColumn(
             state = lazyState,
-            contentPadding = PaddingValues(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.fillMaxSize()
         ) {
             items(journalSize) { index ->
-                EmocioJournalEntryCard(EmocioState.journal[index])
+                EmocioJournalEntry(EmocioState.journal[index])
             }
             item {
-                EmocioTrailingCard()
+                EmocioTrailing()
             }
         }
         LaunchedEffect(journalSize) {
-            lazyState.animateScrollToItem(journalSize - 1)
+           if (journalSize > 0) lazyState.animateScrollToItem(journalSize - 1)
         }
     }
 }
 
-@Composable fun EmocioJournalCard(composable: ComposableLambda) {
-    Card(
-        shape = RoundedCornerShape(20.dp),
-        border = BorderStroke(width = 1.dp, color = Color.LightGray),
-        elevation = 0.dp
-    ) {
-        Column {
-            composable()
-        }
-    }
-}
-
-@Composable fun EmocioTrailingCard() {
+@Composable fun EmocioTrailing() {
     var response by EmocioState.stringResponse
     var state by EmocioState.stateType
     when (state) {
         StateType.Choose -> {
-            EmocioConfirmSkewerCard(onConfirm = {
+            EmocioConfirmSkewer(onConfirm = {
                 state = StateType.Response
             }) {
-                EmocioTrailingCardTitle("Choose one")
                 SingleChooserList(
                     source = EmocioState.choiceCandidates.value,
                     selectionState = EmocioState.choice,
-                    modifier = Modifier.padding(start = 8.dp).fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
         StateType.MultiChoose -> {
-            EmocioConfirmSkewerCard(onConfirm = {
+            EmocioConfirmSkewer(onConfirm = {
                 if (EmocioState.choicesPredicate.value(EmocioState.multiChoice.value)) {
                     state = StateType.Response
                 }
             }) {
-                EmocioTrailingCardTitle("Choose some")
                 MultiChooserList(
                     source = EmocioState.choiceCandidates.value,
                     selectionsState = EmocioState.multiChoice,
                     modifier = Modifier.padding(start = 8.dp).fillMaxSize()
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
         StateType.String -> {
             var invalid by remember { mutableStateOf(false) }
             val predicate by EmocioState.stringPredicate
-            EmocioConfirmSkewerCard(onConfirm = {
+            EmocioConfirmSkewer(onConfirm = {
                 if (predicate(response)) state = StateType.Response
             }) {
-                EmocioTrailingCardTitle("Response")
-                OutlinedTextField(
+                Spacer(Modifier.height(4.dp))
+                TextInput(
                     value = response,
                     onValueChange = {
                         response = it
                         invalid = !predicate(response)
                     },
-                    isError = invalid,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
+                    isError = invalid
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
         StateType.RangedInt -> {
             var invalid by remember { mutableStateOf(false) }
             val range by EmocioState.intRange
-            EmocioConfirmSkewerCard(onConfirm = {
+            EmocioConfirmSkewer(onConfirm = {
                 val int = response.toIntOrNull()
                 if (int != null) {
                     state = StateType.Response
                 }
             }) {
-                EmocioTrailingCardTitle("Number")
-                OutlinedTextField(
+                Spacer(Modifier.height(4.dp))
+                TextInput(
                     value = response,
                     onValueChange = {
                         response = it
                         invalid = response.toIntOrNull() == null || !range.contains(response.toInt())
                     },
-                    isError = invalid,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
+                    isError = invalid
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
         StateType.Boolean -> {
             Row(modifier = Modifier.padding(16.dp)) {
-                FloatingActionButton(
-                    onClick = {
-                        response = "yes"
-                        state = StateType.Response
-                    },
-                ) { Icon(Icons.Outlined.Done, "Yes") }
+                ActionButton(
+                    icon = Icons.Default.Done,
+                    contentDescription = "Yes",
+                ) {
+                    response = "yes"
+                    state = StateType.Response
+                }
                 Spacer(modifier = Modifier.width(32.dp))
-                FloatingActionButton(
-                    onClick = {
-                        response = "no"
-                        state = StateType.Response
-                    },
-                ) { Icon(Icons.Outlined.Close, "No") }
+                ActionButton(
+                    icon = Icons.Default.Close,
+                    contentDescription = "No",
+                ) {
+                    response = "no"
+                    state = StateType.Response
+                }
             }
         }
         StateType.Action -> {}
         StateType.Continue -> {
-            FloatingActionButton(onClick = {
+            ActionButton(
+                icon = Icons.Default.ArrowForward,
+                contentDescription = "Continue",
+            ) {
                 state = StateType.Response
-            }) { Icon(Icons.Default.ArrowForward, "Continue") }
+            }
         }
         StateType.Response -> {
             CircularProgressIndicator()
@@ -174,28 +156,26 @@ import xyz.midnight233.emocio.stateful.StateType
     }
 }
 
-@Composable fun EmocioJournalPrefixCard(prefix: ColumnLambda, content: ComposableLambda) {
+@Composable fun EmocioSkewer(vararg meat: Pair<ImageVector, () -> Unit>, content: ColumnLambda) {
     Row {
-        Column(content = prefix)
-        Spacer(modifier = Modifier.width(16.dp))
-        EmocioJournalCard(content)
+        Column {
+            meat.forEachIndexed { index, pair ->
+                FloatingActionButton(
+                    onClick = pair.second,
+                    elevation = FloatingActionButtonDefaults.elevation(8.dp, 0.dp, 4.dp, 6.dp),
+                    backgroundColor = Color.White,
+                    contentColor = Color.Black,
+                ) { Icon(pair.first, pair.first.name) }
+                if (index != meat.size - 1) Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+        Spacer(modifier = Modifier.width(4.dp))
+        Column(content = content)
     }
 }
 
-@Composable fun EmocioJournalSkewerCard(vararg meat: Pair<ImageVector, () -> Unit>, content: ComposableLambda) {
-    EmocioJournalPrefixCard(
-        prefix = {
-            meat.forEachIndexed { index, pair ->
-                FloatingActionButton(onClick = pair.second) { Icon(pair.first, pair.first.name) }
-                if (index != meat.size - 1) Spacer(modifier = Modifier.height(16.dp))
-            }
-        },
-        content = content
-    )
-}
-
-@Composable fun EmocioConfirmSkewerCard(onConfirm: () -> Unit, content: ComposableLambda) {
-    EmocioJournalSkewerCard(
+@Composable fun EmocioConfirmSkewer(onConfirm: () -> Unit, content: ColumnLambda) {
+    EmocioSkewer(
         Icons.Default.Done to onConfirm,
         content = content
     )

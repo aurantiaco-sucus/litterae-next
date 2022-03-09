@@ -14,10 +14,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import xyz.midnight233.emocio.components.LeftPanel
+import xyz.midnight233.emocio.components.compose.EmocioNarrative
+import xyz.midnight233.emocio.components.compose.EmocioNormalPadding
 import xyz.midnight233.emocio.components.compose.EnumChooserButton
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
-import xyz.midnight233.litterae.content.Note
 import xyz.midnight233.litterae.content.NoteCategory
 import xyz.midnight233.litterae.runtime.Instance
 import xyz.midnight233.litterae.runtime.NoteData
@@ -51,14 +52,14 @@ import xyz.midnight233.litterae.runtime.NoteData
         modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
         Column(
-            modifier = Modifier.emocioTextPadding(4.dp)
+            modifier = Modifier.EmocioNormalPadding(4.dp)
         ) {
             Text(
                 text = note.title,
                 fontWeight = FontWeight.Bold,
             )
             Spacer(Modifier.height(8.dp))
-            EmocioContentText(note.content)
+            EmocioNarrative(note.content)
         }
     }
 }
