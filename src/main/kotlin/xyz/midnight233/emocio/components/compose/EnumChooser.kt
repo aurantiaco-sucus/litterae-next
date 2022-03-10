@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 @Composable
 inline fun <reified T: Enum<T>> EnumChooserButton(
@@ -19,6 +20,9 @@ inline fun <reified T: Enum<T>> EnumChooserButton(
             menuExpanded = true
         },
         shape = RoundedCornerShape(100),
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = Color.Black
+        ),
         modifier = modifier
     ) {
         Text(value.name)

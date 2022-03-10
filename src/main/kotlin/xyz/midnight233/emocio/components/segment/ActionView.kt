@@ -9,10 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import xyz.midnight233.emocio.components.RightPanel
+import xyz.midnight233.emocio.components.compose.EmocioButton
 import xyz.midnight233.emocio.components.compose.EmocioNarrative
+import xyz.midnight233.emocio.components.compose.EmocioTextButton
 import xyz.midnight233.emocio.components.compose.EnumChooserButton
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
@@ -33,21 +37,31 @@ import xyz.midnight233.litterae.content.ActionCategory
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
             items(current) {
-                Button(
+                EmocioButton(
                     onClick = {
                         EmocioState.actionChoice.value = it
                         EmocioState.stateType.value = StateType.Response
                     },
-                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Column {
-                        Text(
-                            text = it.name,
-                            fontWeight = FontWeight.Bold
-                        )
                         if (it.description != null) {
+                            Text(
+                                text = it.name,
+                                fontWeight = FontWeight.Light,
+                                fontSize = 10.sp
+                            )
                             Spacer(Modifier.height(4.dp))
-                            EmocioNarrative(it.description)
+                            Text(
+                                text = it.description,
+                                fontWeight = FontWeight.Light,
+                                fontSize = 12.sp
+                            )
+                        } else {
+                            Text(
+                                text = it.name,
+                                fontWeight = FontWeight.Light,
+                                fontSize = 12.sp
+                            )
                         }
                     }
                 }

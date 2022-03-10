@@ -15,6 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
+import xyz.midnight233.emocio.components.compose.ActionButton
+import xyz.midnight233.emocio.components.compose.EmocioTextButton
 import xyz.midnight233.emocio.implementation.EmocioBackend
 import xyz.midnight233.emocio.implementation.EmocioFrontend
 import xyz.midnight233.emocio.implementation.EmocioRuntime
@@ -37,17 +42,20 @@ import javax.swing.JOptionPane
         ) {
             Column(Modifier.padding(start = 16.dp)) {
                 Text(
-                    text = "Artifact",
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp)
+                    text = "ARTIFACT",
+                    fontWeight = FontWeight.Light,
+                    letterSpacing = 4.sp,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 2.dp)
                 )
+                Spacer(Modifier.height(4.dp))
                 Row {
-                    Button(
-                        shape = RoundedCornerShape(20.dp),
+                    EmocioTextButton(
                         onClick = {
                             artifactChooserOpened = !artifactChooserOpened
-                        }
-                    ) { Text(artifact.title) }
+                        },
+                        text = artifact.title
+                    )
                     DropdownMenu(
                         expanded = artifactChooserOpened,
                         onDismissRequest = {
@@ -67,54 +75,66 @@ import javax.swing.JOptionPane
                         }
                     }
                 }
+                Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "Instance",
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp)
+                    text = "INSTANCE",
+                    fontWeight = FontWeight.Light,
+                    letterSpacing = 4.sp,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 2.dp)
                 )
-                Button(
-                    shape = RoundedCornerShape(100),
+                Spacer(Modifier.height(4.dp))
+                EmocioTextButton(
                     onClick = {
                         val name = JOptionPane.showInputDialog("Name of instance?")?: ""
                         if (name != "" && EmocioBackend.checkInstanceName(name))
                             instances += EmocioBackend.instanceNamed(name)
-                    }
-                ) {
-                    Text("Create")
-                }
+                    },
+                    text = "Create"
+                )
             }
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(16.dp))
             LazyColumn {
                 items(instances.size) {
                     ListItem(
                         trailing = {
                             if (instanceIndex == it) Icon(
                                 imageVector = Icons.Default.Done,
-                                contentDescription = "Selected"
+                                contentDescription = "Selected",
+                                modifier = Modifier.scale(0.75f)
                             )
                         },
                         modifier = Modifier
+                            .height(36.dp)
                             .clickable {
                                 instanceIndex = it
                             }
                     ) {
-                        Text(instances[it].instanceName)
+                        Row {
+                            Spacer(Modifier.width(2.dp))
+                            Text(
+                                text = instances[it].instanceName.uppercase().toCharArray().joinToString(" "),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Light
+                            )
+                        }
+
                     }
                 }
             }
         }
-        if (instances.isNotEmpty()) FloatingActionButton(
-            onClick = {
-                Frontend.current = EmocioFrontend
-                Instance.current = instances[instanceIndex]
-                EmocioState.gameReady.value = true
-                Instance.instanceReady.set(true)
-            },
+        if (instances.isNotEmpty()) ActionButton(
+            icon = Icons.Default.ArrowForward,
+            contentDescription = "Start game",
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
+                .scale(0.75f)
         ) {
-            Icon(Icons.Default.ArrowForward, "Start game")
+            Frontend.current = EmocioFrontend
+            Instance.current = instances[instanceIndex]
+            EmocioState.gameReady.value = true
+            Instance.instanceReady.set(true)
         }
     }
 }

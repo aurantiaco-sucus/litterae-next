@@ -1,10 +1,11 @@
 package xyz.midnight233.pm01e.ch0
 
+import xyz.midnight233.litterae.content.ActionCategory
 import xyz.midnight233.litterae.content.Segment
 
 object Ch0Sg0 : Segment({
     val sceneIntro by scene("Introduction") {
-        action("Invoke") {
+        action("Invoke", ActionCategory.Context, "Run a series of tests.") {
             narrator.."Somewhere, you suddenly gained consciousness. *Absolutely nothing* is around you..."
             "Someone".."Wake up!"
             "\"Where am I?\", you asked from the bottom of heart...".. {
