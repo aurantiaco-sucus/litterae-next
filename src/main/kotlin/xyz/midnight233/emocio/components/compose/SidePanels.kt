@@ -1,4 +1,4 @@
-package xyz.midnight233.emocio.components
+package xyz.midnight233.emocio.components.compose
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -16,16 +16,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.pointer.pointerMoveFilter
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import xyz.midnight233.emocio.components.compose.ActionButton
-import xyz.midnight233.emocio.components.compose.EmocioNarrative
 
 @Composable inline fun BoxScope.LeftPanel(
     available: Boolean,
@@ -102,8 +96,8 @@ import xyz.midnight233.emocio.components.compose.EmocioNarrative
     ) {
         Card(
             elevation = 0.dp,
-            border = BorderStroke(width = 0.5.dp, color = Color.LightGray),
-            backgroundColor = Color.White,
+            border = BorderStroke(width = 0.5.dp, color = defaultColors.stroke),
+            backgroundColor = defaultColors.background,
             shape = panelShape,
             modifier = Modifier
                 .heightIn(min = 400.dp, max = 800.dp)

@@ -8,8 +8,8 @@ import java.io.File
 import kotlin.system.exitProcess
 
 object EmocioBackend {
-    val engineDir = File(".litterae")
-    val profileDir get() = File(".litterae/${EmocioRuntime.artifact.identifier}")
+    private val engineDir = File(".litterae")
+    private val profileDir get() = File(".litterae/${EmocioRuntime.artifact.identifier}")
 
     const val fileExtension = "litterae_data"
 

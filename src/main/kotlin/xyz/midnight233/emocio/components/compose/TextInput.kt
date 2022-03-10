@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
         maxLines = 1,
         shape = RoundedCornerShape(50),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = Color(0.9f, 0.9f, 0.9f),
-            focusedBorderColor = Color.LightGray,
+            unfocusedBorderColor = defaultColors.boundary,
+            focusedBorderColor = defaultColors.stroke,
             errorBorderColor = Color.Red,
         ),
         isError = isError,

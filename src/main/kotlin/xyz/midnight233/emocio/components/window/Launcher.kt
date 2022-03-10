@@ -1,9 +1,8 @@
-package xyz.midnight233.emocio.components
+package xyz.midnight233.emocio.components.window
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -16,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import xyz.midnight233.emocio.components.compose.ActionButton
 import xyz.midnight233.emocio.components.compose.EmocioTextButton
@@ -88,7 +86,7 @@ import javax.swing.JOptionPane
                     onClick = {
                         val name = JOptionPane.showInputDialog("Name of instance?")?: ""
                         if (name != "" && EmocioBackend.checkInstanceName(name))
-                            instances += EmocioBackend.instanceNamed(name)
+                            instances = instances + EmocioBackend.instanceNamed(name)
                     },
                     text = "Create"
                 )

@@ -9,13 +9,9 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import xyz.midnight233.emocio.components.RowLambda
-import xyz.midnight233.emocio.implementation.EmocioBackend
-import javax.swing.JOptionPane
 
 @Composable fun EmocioButton(
     onClick: () -> Unit,
@@ -26,8 +22,8 @@ import javax.swing.JOptionPane
         shape = RoundedCornerShape(50),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color(0.97f, 0.97f, 0.97f),
-            contentColor = Color.Black
+            backgroundColor = defaultColors.surface,
+            contentColor = defaultColors.foreground
         ),
         elevation = ButtonDefaults.elevation(
             defaultElevation = 2.dp,
@@ -59,4 +55,12 @@ import javax.swing.JOptionPane
             fontWeight = FontWeight.Medium
         )
     }
+}
+
+@Composable fun EmocioButtonCaption(text: String) {
+    Text(
+        text = text,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Medium
+    )
 }

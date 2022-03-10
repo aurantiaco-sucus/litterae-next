@@ -3,24 +3,18 @@ package xyz.midnight233.emocio.components.segment
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import xyz.midnight233.emocio.components.*
-import xyz.midnight233.emocio.components.compose.ActionButton
-import xyz.midnight233.emocio.components.compose.TextInput
+import xyz.midnight233.emocio.components.compose.*
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
 
@@ -163,8 +157,8 @@ import xyz.midnight233.emocio.stateful.StateType
                 FloatingActionButton(
                     onClick = pair.second,
                     elevation = FloatingActionButtonDefaults.elevation(8.dp, 0.dp, 4.dp, 6.dp),
-                    backgroundColor = Color.White,
-                    contentColor = Color.Black,
+                    backgroundColor = defaultColors.background,
+                    contentColor = defaultColors.foreground,
                 ) { Icon(pair.first, pair.first.name) }
                 if (index != meat.size - 1) Spacer(modifier = Modifier.height(16.dp))
             }

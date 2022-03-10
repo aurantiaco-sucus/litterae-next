@@ -1,17 +1,14 @@
-package xyz.midnight233.emocio.components
+package xyz.midnight233.emocio.components.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import xyz.midnight233.emocio.components.compose.EmocioNarrative
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable fun SingleChooserList(
@@ -30,9 +27,9 @@ import xyz.midnight233.emocio.components.compose.EmocioNarrative
                             if (selection != it) selection = it
                         },
                         colors = RadioButtonDefaults.colors(
-                            selectedColor = Color.Black,
-                            unselectedColor = Color.LightGray,
-                            disabledColor = Color.LightGray
+                            selectedColor = defaultColors.foreground,
+                            unselectedColor = defaultColors.stroke,
+                            disabledColor = defaultColors.stroke
                         )
                     )
                 },

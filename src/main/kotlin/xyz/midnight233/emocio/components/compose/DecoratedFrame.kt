@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.*
-import xyz.midnight233.emocio.components.ComposableLambda
 import javax.swing.JFrame
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -30,51 +29,52 @@ fun FrameWindowScope.DecoratedFrame(
     onClose: () -> Unit,
     content: ComposableLambda
 ) {
-    Surface(
-        color = Color.White,
-        border = BorderStroke(0.5.dp, Color.Gray),
-        shape = RoundedCornerShape(8.dp)
-    ) {
-        Column {
-            WindowDraggableArea(
-                modifier = Modifier.combinedClickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = {},
-                    onDoubleClick = {
-                        if (window.extendedState == JFrame.MAXIMIZED_BOTH) {
-                            window.extendedState = JFrame.NORMAL
-                        } else window.extendedState = JFrame.MAXIMIZED_BOTH
-                    }
-                )
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth().background(Color(0.97f, 0.97f, 0.97f))
-                ) {
-                    Text(
-                        text = title.uppercase(),
-                        fontSize = 12.sp,
-                        letterSpacing = 4.sp,
-                        modifier = Modifier.align(Alignment.Center).padding(top = 5.dp, bottom = 4.dp)
+    EmocioMaterial {
+        Surface(
+            border = BorderStroke(0.5.dp, Color.Gray),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Column {
+                WindowDraggableArea(
+                    modifier = Modifier.combinedClickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {},
+                        onDoubleClick = {
+                            if (window.extendedState == JFrame.MAXIMIZED_BOTH) {
+                                window.extendedState = JFrame.NORMAL
+                            } else window.extendedState = JFrame.MAXIMIZED_BOTH
+                        }
                     )
-                    Row(
-                        modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().background(defaultColors.surface)
                     ) {
-                        IconButton(
-                            onClick = {
-                                window.extendedState = JFrame.ICONIFIED
-                            },
-                            modifier = Modifier.scale(0.5f).size(32.dp)
-                        ) { Icon(Icons.Filled.KeyboardArrowDown, "Minimize") }
-                        IconButton(
-                            onClick = onClose,
-                            modifier = Modifier.scale(0.5f).size(32.dp)
-                        ) { Icon(Icons.Default.Close, "Close") }
+                        Text(
+                            text = title.uppercase(),
+                            fontSize = 12.sp,
+                            letterSpacing = 4.sp,
+                            modifier = Modifier.align(Alignment.Center).padding(top = 5.dp, bottom = 4.dp)
+                        )
+                        Row(
+                            modifier = Modifier.align(Alignment.TopEnd)
+                        ) {
+                            IconButton(
+                                onClick = {
+                                    window.extendedState = JFrame.ICONIFIED
+                                },
+                                modifier = Modifier.scale(0.5f).size(32.dp)
+                            ) { Icon(Icons.Filled.KeyboardArrowDown, "Minimize") }
+                            IconButton(
+                                onClick = onClose,
+                                modifier = Modifier.scale(0.5f).size(32.dp)
+                            ) { Icon(Icons.Default.Close, "Close") }
 
+                        }
                     }
                 }
+                content()
             }
-            content()
         }
     }
 }

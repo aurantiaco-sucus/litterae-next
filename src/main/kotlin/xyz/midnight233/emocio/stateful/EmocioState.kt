@@ -3,8 +3,6 @@ package xyz.midnight233.emocio.stateful
 import androidx.compose.runtime.MutableState
 import xyz.midnight233.litterae.content.Action
 import xyz.midnight233.litterae.content.Artifact
-import xyz.midnight233.litterae.content.Note
-import xyz.midnight233.litterae.runtime.NoteData
 
 object EmocioState {
     // Gameplay content states

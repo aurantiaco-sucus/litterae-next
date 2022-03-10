@@ -10,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import xyz.midnight233.emocio.components.LeftPanel
+import xyz.midnight233.emocio.components.compose.LeftPanel
 import xyz.midnight233.emocio.components.compose.EmocioNarrative
 import xyz.midnight233.emocio.components.compose.EmocioNormalPadding
 import xyz.midnight233.emocio.components.compose.EnumChooserButton
+import xyz.midnight233.emocio.components.compose.defaultColors
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
 import xyz.midnight233.litterae.content.NoteCategory
@@ -46,7 +46,7 @@ import xyz.midnight233.litterae.runtime.NoteData
 
 @Composable fun EmocioNotebookCard(note: NoteData) {
     Card(
-        border = BorderStroke(width = 1.dp, color = Color.LightGray),
+        border = BorderStroke(width = 1.dp, color = defaultColors.stroke),
         elevation = 0.dp,
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)

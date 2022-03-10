@@ -1,12 +1,12 @@
 package xyz.midnight233.emocio.components.compose
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 @Composable
 inline fun <reified T: Enum<T>> EnumChooserButton(
@@ -21,11 +21,12 @@ inline fun <reified T: Enum<T>> EnumChooserButton(
         },
         shape = RoundedCornerShape(100),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = Color.Black
+            contentColor = defaultColors.foreground
         ),
-        modifier = modifier
+        border = BorderStroke(0.5.dp, defaultColors.stroke),
+        modifier = Modifier.height(32.dp).then(modifier)
     ) {
-        Text(value.name)
+        EmocioButtonCaption(value.name)
         DropdownMenu(
             expanded = menuExpanded,
             onDismissRequest = {

@@ -1,4 +1,4 @@
-package xyz.midnight233.emocio.components
+package xyz.midnight233.emocio.components.compose
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.ColumnScope

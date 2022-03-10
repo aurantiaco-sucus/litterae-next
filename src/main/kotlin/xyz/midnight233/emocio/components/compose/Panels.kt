@@ -1,4 +1,4 @@
-package xyz.midnight233.emocio.components
+package xyz.midnight233.emocio.components.compose
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*

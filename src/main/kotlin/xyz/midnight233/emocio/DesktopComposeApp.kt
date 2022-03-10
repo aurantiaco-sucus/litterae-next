@@ -8,8 +8,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import xyz.midnight233.emocio.components.EmocioGameplayWindow
-import xyz.midnight233.emocio.components.EmocioLauncherWindow
+import xyz.midnight233.emocio.components.window.EmocioGameplayWindow
+import xyz.midnight233.emocio.components.window.EmocioLauncherWindow
 import xyz.midnight233.emocio.components.compose.DecoratedFrame
 import xyz.midnight233.emocio.implementation.EmocioBackend
 import xyz.midnight233.emocio.implementation.EmocioDefault
