@@ -1,6 +1,6 @@
-package xyz.midnight233.litterae.content
+package litterae.content
 
-import xyz.midnight233.litterae.compose.CompositionLambda
+import litterae.compose.CompositionLambda
 
 class Action(
     val name: String,

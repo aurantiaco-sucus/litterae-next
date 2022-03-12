@@ -1,6 +1,6 @@
-package xyz.midnight233.litterae.content
+package litterae.content
 
-import xyz.midnight233.litterae.runtime.Instance
+import litterae.runtime.Instance
 import kotlin.reflect.KProperty
 
 class Memo(val path: (prop: KProperty<*>) -> String) {

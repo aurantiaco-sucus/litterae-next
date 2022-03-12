@@ -1,6 +1,6 @@
 package xyz.midnight233.emocio.debugging
 
-import xyz.midnight233.litterae.content.Artifact
+import litterae.content.Artifact
 
 object Placeholder {
     val emptyArtifact = Artifact(

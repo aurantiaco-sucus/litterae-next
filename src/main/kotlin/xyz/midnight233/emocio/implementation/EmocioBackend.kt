@@ -1,9 +1,9 @@
 package xyz.midnight233.emocio.implementation
 
 import xyz.midnight233.emocio.stateful.EmocioState
-import xyz.midnight233.litterae.runtime.Instance
-import xyz.midnight233.litterae.runtime.InstanceCodec
-import xyz.midnight233.litterae.runtime.NoteData
+import litterae.runtime.Instance
+import litterae.runtime.InstanceCodec
+import litterae.runtime.NoteData
 import java.io.File
 import kotlin.system.exitProcess
 

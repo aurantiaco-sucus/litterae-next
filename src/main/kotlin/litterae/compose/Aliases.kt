@@ -1,4 +1,4 @@
-package xyz.midnight233.litterae.compose
+package litterae.compose
 
 typealias CompositionLambda = Composition.() -> Unit
 

@@ -47,9 +47,7 @@ fun FrameWindowScope.DecoratedFrame(
                         }
                     )
                 ) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth().background(defaultColors.surface)
-                    ) {
+                    Box(modifier = Modifier.fillMaxWidth().background(defaultColors.surface)) {
                         Text(
                             text = title.uppercase(),
                             fontSize = 12.sp,

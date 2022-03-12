@@ -1,6 +1,6 @@
-package xyz.midnight233.litterae.runtime
+package litterae.runtime
 
-import xyz.midnight233.litterae.content.NoteCategory
+import litterae.content.NoteCategory
 
 object InstanceCodec {
     fun encodeMarks(source: List<String>): String = source

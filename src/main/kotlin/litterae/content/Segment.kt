@@ -1,7 +1,7 @@
-package xyz.midnight233.litterae.content
+package litterae.content
 
-import xyz.midnight233.litterae.common.Reference
-import xyz.midnight233.litterae.common.References.weakReferenceOf
+import litterae.common.Reference
+import litterae.common.References.weakReferenceOf
 
 abstract class Segment(val builder: Segment.() -> Unit) {
     lateinit var scenes: MutableList<Scene>

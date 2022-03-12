@@ -1,6 +1,6 @@
-package xyz.midnight233.litterae.compose
+package litterae.compose
 
-import xyz.midnight233.litterae.runtime.Frontend
+import litterae.runtime.Frontend
 
 object Composition {
     private val frontend get() = Frontend.current

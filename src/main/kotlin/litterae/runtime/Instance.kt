@@ -1,6 +1,6 @@
-package xyz.midnight233.litterae.runtime
+package litterae.runtime
 
-import xyz.midnight233.litterae.content.Memo
+import litterae.content.Memo
 import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class Instance {

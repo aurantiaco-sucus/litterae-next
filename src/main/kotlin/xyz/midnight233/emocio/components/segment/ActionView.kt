@@ -16,8 +16,8 @@ import xyz.midnight233.emocio.components.compose.EmocioButton
 import xyz.midnight233.emocio.components.compose.EnumChooserButton
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
-import xyz.midnight233.litterae.content.Action
-import xyz.midnight233.litterae.content.ActionCategory
+import litterae.content.Action
+import litterae.content.ActionCategory
 
 @Composable fun BoxScope.EmocioActionView() {
     val categoryState = remember { mutableStateOf(ActionCategory.Context) }

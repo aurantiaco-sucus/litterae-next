@@ -1,8 +1,8 @@
-package xyz.midnight233.litterae.content
+package litterae.content
 
-import xyz.midnight233.litterae.common.Reference
-import xyz.midnight233.litterae.common.References.weakReferenceOf
-import xyz.midnight233.litterae.compose.CompositionLambda
+import litterae.common.Reference
+import litterae.common.References.weakReferenceOf
+import litterae.compose.CompositionLambda
 
 class Scene(val segment: Segment, private val index: Int, val name: String, val builder: Scene.() -> Unit) {
     var immediateEvent: CompositionLambda? = null

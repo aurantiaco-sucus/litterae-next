@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
         value = value,
         onValueChange = onValueChange,
         maxLines = 1,
-        shape = RoundedCornerShape(50),
+        shape = RoundedCornerShape(25),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = defaultColors.boundary,
             focusedBorderColor = defaultColors.stroke,

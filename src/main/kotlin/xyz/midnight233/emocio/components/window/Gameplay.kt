@@ -13,8 +13,8 @@ import xyz.midnight233.emocio.components.segment.EmocioNotebookView
 import xyz.midnight233.emocio.implementation.EmocioRuntime
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
-import xyz.midnight233.litterae.content.Action
-import xyz.midnight233.litterae.content.ActionCategory
+import litterae.content.Action
+import litterae.content.ActionCategory
 
 @Composable fun EmocioGameplayWindow() {
     EmocioState.run {

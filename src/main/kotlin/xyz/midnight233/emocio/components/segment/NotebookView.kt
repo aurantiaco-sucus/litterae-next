@@ -19,9 +19,9 @@ import xyz.midnight233.emocio.components.compose.EnumChooserButton
 import xyz.midnight233.emocio.components.compose.defaultColors
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
-import xyz.midnight233.litterae.content.NoteCategory
-import xyz.midnight233.litterae.runtime.Instance
-import xyz.midnight233.litterae.runtime.NoteData
+import litterae.content.NoteCategory
+import litterae.runtime.Instance
+import litterae.runtime.NoteData
 
 @Composable fun BoxScope.EmocioNotebookView() {
     val categoryState = remember { mutableStateOf(NoteCategory.Storyline) }

@@ -1,4 +1,4 @@
-package xyz.midnight233.litterae.content
+package litterae.content
 
 enum class ActionCategory {
     Context, Examine, Interact, Navigate, Backpack

@@ -3,10 +3,10 @@ package xyz.midnight233.emocio.implementation
 import xyz.midnight233.emocio.implementation.EmocioBackend.exists
 import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.StateType
-import xyz.midnight233.litterae.compose.Composition
-import xyz.midnight233.litterae.content.Artifact
-import xyz.midnight233.litterae.content.Segment
-import xyz.midnight233.litterae.runtime.Instance
+import litterae.compose.Composition
+import litterae.content.Artifact
+import litterae.content.Segment
+import litterae.runtime.Instance
 
 object EmocioRuntime {
     lateinit var artifact: Artifact

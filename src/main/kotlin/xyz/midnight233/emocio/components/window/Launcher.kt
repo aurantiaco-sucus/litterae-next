@@ -22,8 +22,8 @@ import xyz.midnight233.emocio.implementation.EmocioBackend
 import xyz.midnight233.emocio.implementation.EmocioFrontend
 import xyz.midnight233.emocio.implementation.EmocioRuntime
 import xyz.midnight233.emocio.stateful.EmocioState
-import xyz.midnight233.litterae.runtime.Frontend
-import xyz.midnight233.litterae.runtime.Instance
+import litterae.runtime.Frontend
+import litterae.runtime.Instance
 import javax.swing.JOptionPane
 
 @OptIn(ExperimentalMaterialApi::class)

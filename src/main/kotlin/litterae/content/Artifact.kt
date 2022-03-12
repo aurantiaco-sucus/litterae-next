@@ -1,6 +1,6 @@
-package xyz.midnight233.litterae.content
+package litterae.content
 
-import xyz.midnight233.litterae.runtime.Instance
+import litterae.runtime.Instance
 
 class Artifact(
     val identifier: String,

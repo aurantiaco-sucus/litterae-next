@@ -1,6 +1,6 @@
-package xyz.midnight233.litterae.runtime
+package litterae.runtime
 
-import xyz.midnight233.litterae.content.NoteCategory
+import litterae.content.NoteCategory
 
 data class NoteData(val identifier: String, val title: String, val category: NoteCategory, val content: String) {
     override fun equals(other: Any?): Boolean {

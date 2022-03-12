@@ -21,10 +21,6 @@ import androidx.compose.ui.unit.sp
     Button(
         shape = RoundedCornerShape(50),
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = defaultColors.surface,
-            contentColor = defaultColors.foreground
-        ),
         elevation = ButtonDefaults.elevation(
             defaultElevation = 2.dp,
             hoveredElevation = 4.dp,

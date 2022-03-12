@@ -1,6 +1,6 @@
 package xyz.midnight233.pm01e
 
-import xyz.midnight233.litterae.content.Artifact
+import litterae.content.Artifact
 import xyz.midnight233.pm01e.ch0.Ch0Sg0
 
 val pm01artifact get() = Artifact(

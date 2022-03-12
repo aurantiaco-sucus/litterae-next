@@ -1,4 +1,4 @@
-package xyz.midnight233.litterae.runtime
+package litterae.runtime
 
 abstract class Frontend {
     abstract fun showNotification(content: String)

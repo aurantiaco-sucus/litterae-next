@@ -12,8 +12,6 @@ import androidx.compose.ui.unit.dp
 fun ActionButton(icon: ImageVector, contentDescription: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     FloatingActionButton(
         elevation = FloatingActionButtonDefaults.elevation(8.dp, 0.dp, 4.dp, 6.dp),
-        backgroundColor = defaultColors.surface,
-        contentColor = defaultColors.foreground,
         onClick = onClick,
         modifier = modifier
     ) {

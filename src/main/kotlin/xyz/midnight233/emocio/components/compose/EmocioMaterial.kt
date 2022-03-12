@@ -5,7 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-val defaultColors: EmocioColors = EmocioDark
+val defaultColors: EmocioColors = EmocioLight
 
 sealed class EmocioColors(
     val background: Color,
@@ -34,10 +34,10 @@ object EmocioDark : EmocioColors(
 @Composable fun EmocioMaterial(composable: ComposableLambda) {
     MaterialTheme(
         colors = Colors(
-            primary = defaultColors.background,
-            primaryVariant = defaultColors.background,
-            secondary = defaultColors.background,
-            secondaryVariant = defaultColors.background,
+            primary = defaultColors.surface,
+            primaryVariant = defaultColors.surface,
+            secondary = defaultColors.surface,
+            secondaryVariant = defaultColors.surface,
             background = defaultColors.background,
             surface = defaultColors.background,
             error = Color.Red,

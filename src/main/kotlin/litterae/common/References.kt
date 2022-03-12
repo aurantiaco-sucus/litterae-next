@@ -1,4 +1,4 @@
-package xyz.midnight233.litterae.common
+package litterae.common
 
 object References {
     /**

@@ -4,7 +4,7 @@ import xyz.midnight233.emocio.stateful.EmocioState
 import xyz.midnight233.emocio.stateful.JournalEntry
 import xyz.midnight233.emocio.stateful.JournalEntryType
 import xyz.midnight233.emocio.stateful.StateType
-import xyz.midnight233.litterae.runtime.Frontend
+import litterae.runtime.Frontend
 
 object EmocioFrontend : Frontend() {
     fun waitForResponse() {

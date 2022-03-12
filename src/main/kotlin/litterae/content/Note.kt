@@ -1,8 +1,8 @@
-package xyz.midnight233.litterae.content
+package litterae.content
 
 import xyz.midnight233.emocio.stateful.EmocioState
-import xyz.midnight233.litterae.runtime.Instance
-import xyz.midnight233.litterae.runtime.NoteData
+import litterae.runtime.Instance
+import litterae.runtime.NoteData
 
 class Note(
     val markPath: String,
